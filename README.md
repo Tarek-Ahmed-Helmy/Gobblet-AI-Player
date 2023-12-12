@@ -1,2 +1,2 @@
 # Gobblet-AI-Player
-<h1>using PYGAME</h1>
+<h2>using PYGAME</h2>
