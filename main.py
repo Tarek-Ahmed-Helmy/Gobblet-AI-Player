@@ -13,6 +13,7 @@ def main():
     run=True
     clock=pygame.time.Clock()
     board=Board()
+    board.create_board()
     while run:
         clock.tick(FPS)
         for event in pygame.event.get():

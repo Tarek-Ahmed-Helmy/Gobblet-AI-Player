@@ -1,7 +1,7 @@
 import pygame
 from .constants import *
 from .piece import Piece
-from collections import deque
+from .stack import Stack
 
 class Board:
     def __init__(self):
@@ -16,34 +16,34 @@ class Board:
 
     def draw(self,screen):
         for i in range(len(self.board)):
-            for j in range(self.board[i]):
-                if self.board[i][j]!=0:
-                    self.board[i][j].draw(screen)
+            for j in range(len(self.board[i])):
+                if self.board[i][j].isEmpty() == False:
+                    self.board[i][j].peek().draw(screen)
         
     def create_board(self):
         gobblet_sizes=[SIZE1, SIZE2, SIZE3, SIZE4]
-        stack1 = deque()
-        stack2 = deque()
-        stack3 = deque()
-        stack4 = deque()
-        stack5 = deque()
-        stack6 = deque()
-        shelf1 = [stack1, stack2, stack3]
-        shelf2 = [stack4, stack5, stack6]
-        self.board.append(shelf1)
-        self.board.append([deque(), deque(), deque(), deque()])
-        self.board.append([0, 0, 0, 0])
-        self.board.append([0, 0, 0, 0])
-        self.board.append([0, 0, 0, 0])
-        self.board.append(shelf2)
+        stack1 = Stack()
+        stack2 = Stack()
+        stack3 = Stack()
+        stack4 = Stack()
+        stack5 = Stack()
+        stack6 = Stack()
+        player1 = [stack1, stack2, stack3]
+        player2 = [stack4, stack5, stack6]
+        self.board.append(player2)
+        self.board.append([Stack(), Stack(), Stack(), Stack()])
+        self.board.append([Stack(), Stack(), Stack(), Stack()])
+        self.board.append([Stack(), Stack(), Stack(), Stack()])
+        self.board.append([Stack(), Stack(), Stack(), Stack()])
+        self.board.append(player1)
 
-        for i in range(len(shelf1)):
+        for i in range(len(player2)):
             for size in gobblet_sizes:
-                shelf1[i].append(Piece((i+1)*243,100,RED,size))
+                player2[i].push(Piece((i+1)*WIDTH/(1000/245),HEIGHT/(1000/100),RED,size))
 
-        for i in range(len(shelf2)):
+        for i in range(len(player1)):
             for size in gobblet_sizes:
-                shelf2[i].append(Piece((i+1)*243,900,BLUE,size))
+                player1[i].push(Piece((i+1)*WIDTH/(1000/245),HEIGHT/(1000/900),BLUE,size))
 
         
             
