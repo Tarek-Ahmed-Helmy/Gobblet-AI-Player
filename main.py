@@ -23,7 +23,7 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pass
         board.draw_squares(Screen)
-        board.draw(Screen)
+        board.draw_pieces(Screen)
         pygame.display.update()
     pygame.quit()
 

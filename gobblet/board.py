@@ -11,15 +11,15 @@ class Board:
         screen.fill(GREY)
         for row in range(ROWS):
             for col in range(COLUMNS):
-                pygame.draw.rect(screen,BROWN,(row*SQUARE_SIZE+PADDING,col*SQUARE_SIZE+PADDING,SQUARE_SIZE,SQUARE_SIZE))
+                pygame.draw.rect(screen,ORANGE,(row*SQUARE_SIZE+PADDING,col*SQUARE_SIZE+PADDING,SQUARE_SIZE,SQUARE_SIZE))
                 pygame.draw.rect(screen, BLACK,(row*SQUARE_SIZE+PADDING, col*SQUARE_SIZE+PADDING,SQUARE_SIZE,SQUARE_SIZE),1)
 
-    def draw(self,screen):
+    def draw_pieces(self,screen):
         for i in range(len(self.board)):
             for j in range(len(self.board[i])):
                 if self.board[i][j].isEmpty() == False:
                     self.board[i][j].peek().draw(screen)
-        
+
     def create_board(self):
         gobblet_sizes=[SIZE1, SIZE2, SIZE3, SIZE4]
         stack1 = Stack()
@@ -39,15 +39,8 @@ class Board:
 
         for i in range(len(player2)):
             for size in gobblet_sizes:
-                player2[i].push(Piece((i+1)*WIDTH/(1000/245),HEIGHT/(1000/100),RED,size))
+                player2[i].push(Piece((i+1)*WIDTH/(WIN_LEN/250),HEIGHT/(WIN_LEN/100),RED,size))
 
         for i in range(len(player1)):
             for size in gobblet_sizes:
-                player1[i].push(Piece((i+1)*WIDTH/(1000/245),HEIGHT/(1000/900),BLUE,size))
-
-        
-            
-        
-
-# board = Board()
-# board.create_board()
+                player1[i].push(Piece((i+1)*WIDTH/(WIN_LEN/250),HEIGHT/(WIN_LEN/900),NAVY,size))
