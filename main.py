@@ -3,7 +3,7 @@ from gobblet.constants import *
 from gobblet.board import Board
 
 #clock ticks
-FBS=60
+FPS=60
 
 Screen=pygame.display.set_mode((WIDTH,HEIGHT))
 pygame.display.set_caption('Gobblet')
@@ -14,7 +14,7 @@ def main():
     clock=pygame.time.Clock()
     board=Board()
     while run:
-        clock.tick(FBS)
+        clock.tick(FPS)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run=False
