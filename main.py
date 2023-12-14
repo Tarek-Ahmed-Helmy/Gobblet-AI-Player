@@ -64,8 +64,25 @@ def main():
                 pos = pygame.mouse.get_pos()
                 clicked_color = get_color_at_position(pos)
                 
-                if is_within_board(pos):
-                    pass
+                if is_within_board(pos) and (clicked_color == RED or clicked_color == NAVY):
+                    # Wait for the second click
+                    second_click = False
+                    while not second_click:
+                        for event in pygame.event.get():
+                            if event.type == pygame.QUIT:
+                                pygame.quit()
+                                run=False
+                            elif event.type == pygame.MOUSEBUTTONDOWN :
+                                second_click=True
+                                posSquare = pygame.mouse.get_pos()
+                                if not(is_within_board(posSquare)):
+                                    pass
+                                elif is_within_board(posSquare):
+                                 # Get the square position
+                                    rowS,colS=get_row_col_from_click_onBoard(posSquare)
+                                    rowG,colG=get_row_col_from_click_onBoard(pos)
+                                    board.put_piece(rowG,colG,rowS,colS,Screen)
+                                    pygame.display.update()
                 elif not(is_within_board(pos)) and clicked_color == RED:
                     # Wait for the second click
                     second_click = False
