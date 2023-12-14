@@ -20,6 +20,30 @@ class Board:
                 if self.board[i][j].isEmpty() == False:
                     self.board[i][j].peek().draw(screen)
 
+
+
+
+     # still no Need
+    def identify_empty_squares(self):
+        empty_squares = []
+        for row_idx, row in enumerate(self.board):
+            for col_idx, col in enumerate(row):
+                if col.isEmpty():
+                    empty_squares.append((row_idx, col_idx))
+        return empty_squares
+
+
+    
+    def put_piece(self,rowG,colG,rowS,colS,screen):
+        if not(self.board[rowG][colG].isEmpty()):
+            piece = self.board[rowG][colG].pop()
+            piece.x = colS * SQUARE_SIZE + PADDING + SQUARE_SIZE // 2
+            piece.y = (rowS-1) * SQUARE_SIZE + PADDING + SQUARE_SIZE // 2
+            self.board[rowS][colS].push(piece)
+            self.draw_pieces(screen)
+            
+            
+       
     def create_board(self):
         gobblet_sizes=[SIZE1, SIZE2, SIZE3, SIZE4]
         stack1 = Stack()
