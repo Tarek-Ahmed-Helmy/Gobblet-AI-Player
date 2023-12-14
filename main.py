@@ -37,11 +37,12 @@ def get_color_at_position(mouse_pos):
 def get_row_col_from_click_onGobblet(position,color):
     x,y = position
     # Calculate row and column indices
-    col = ((x * (WIN_LEN/250) // WIDTH)-1)
+    col_temp = ((x * (WIN_LEN/250) / WIDTH)-1)
     if(color==RED):
         row = 0
     elif(color == NAVY):
         row = 5
+    col = round(col_temp)
     return int(row), int(col)
 
 
