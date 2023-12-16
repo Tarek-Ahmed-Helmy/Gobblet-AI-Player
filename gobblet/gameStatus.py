@@ -2,26 +2,15 @@ def check_winner(realBorad):
     # Check rows for a winner
     board = realBorad[1:5];
     for row in board:
-        for col in range(len(row) - 3):
-            if all(piece == row[col] for piece in row[col:col + 4]) and row[col] != ' ':
-                return row[col]
+        if not (row[0].isEmpty()):
+            color = row[0].peek().color;
+            return all(not(row[col].isEmpty()) and row[col].peek().color == color for col in range(1, len(row)))
 
     # Check columns for a winner
     for col in range(len(board[0])):
-        for row in range(len(board) - 3):
-            if all(board[row + i][col] == board[row][col] != ' ' for i in range(4)):
-                return board[row][col]
+        columnArray = [board[row][col] for row in range(4)]
+        if not (columnArray[0].isEmpty()):
+            color = columnArray[0].peek().color;
+            return all(not(columnArray[row].isEmpty()) and columnArray[row].peek().color == color for row in range(1, len(columnArray)))
 
-    # Check diagonals (top-left to bottom-right) for a winner
-    for row in range(len(board) - 3):
-        for col in range(len(board[0]) - 3):
-            if all(board[row + i][col + i] == board[row][col] != ' ' for i in range(4)):
-                return board[row][col]
-
-    # Check diagonals (bottom-left to top-right) for a winner
-    for row in range(3, len(board)):
-        for col in range(len(board[0]) - 3):
-            if all(board[row - i][col + i] == board[row][col] != ' ' for i in range(4)):
-                return board[row][col]
-
-    return None  # Return None if there's no winne
+    return False  # Return None if there's no winne

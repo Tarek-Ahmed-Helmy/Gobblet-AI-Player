@@ -1,7 +1,7 @@
 import pygame
 from gobblet.constants import *
 from gobblet.board import Board
-
+from gobblet.gameStatus import *
 #clock ticks
 FPS=60
 
@@ -59,11 +59,11 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run=False
-            
+
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 clicked_color = get_color_at_position(pos)
-                
+
                 if is_within_board(pos) and (clicked_color == RED or clicked_color == NAVY):
                     # Wait for the second click
                     second_click = False
@@ -83,6 +83,8 @@ def main():
                                     rowG,colG=get_row_col_from_click_onBoard(pos)
                                     board.put_piece(rowG,colG,rowS,colS,Screen)
                                     pygame.display.update()
+                                    print(check_winner(board.board))
+
                 elif not(is_within_board(pos)) and clicked_color == RED:
                     # Wait for the second click
                     second_click = False
@@ -102,7 +104,8 @@ def main():
                                     rowG,colG=get_row_col_from_click_onGobblet(pos,RED)
                                     board.put_piece(rowG,colG,rowS,colS,Screen)
                                     pygame.display.update()
-                       
+                                    print(check_winner(board.board))
+
                 elif not(is_within_board(pos)) and clicked_color == NAVY:
                     # Wait for the second click
                     second_click = False
@@ -122,6 +125,7 @@ def main():
                                     rowG,colG=get_row_col_from_click_onGobblet(pos,NAVY)
                                     board.put_piece(rowG,colG,rowS,colS,Screen)
                                     pygame.display.update()
+                                    print(check_winner(board.board))
 
                 else:
                     pass
