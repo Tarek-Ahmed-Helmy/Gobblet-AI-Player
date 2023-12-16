@@ -36,11 +36,12 @@ class Board:
     
     def put_piece(self,rowG,colG,rowS,colS,screen):
         if not(self.board[rowG][colG].isEmpty()):
-            piece = self.board[rowG][colG].pop()
-            piece.x = colS * SQUARE_SIZE + PADDING + SQUARE_SIZE // 2
-            piece.y = (rowS-1) * SQUARE_SIZE + PADDING + SQUARE_SIZE // 2
-            self.board[rowS][colS].push(piece)
-            self.draw_pieces(screen)
+            if self.board[rowS][colS].isEmpty() or self.board[rowG][colG].peek().size > self.board[rowS][colS].peek().size:
+                piece = self.board[rowG][colG].pop()
+                piece.x = colS * SQUARE_SIZE + PADDING + SQUARE_SIZE // 2
+                piece.y = (rowS-1) * SQUARE_SIZE + PADDING + SQUARE_SIZE // 2
+                self.board[rowS][colS].push(piece)
+                self.draw_pieces(screen)
             
             
        
