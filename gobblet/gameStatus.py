@@ -68,6 +68,27 @@ def can_play(board, rowS, colS, Gcolor):
                 if (row.isEmpty()):
                     return True
 
+        if rowS == colS + 1:
+            main_diagonal = [board[i + 1][i] for i in range(4)]
+            diagonalCounter = 0
+            for square in main_diagonal:
+                if not (square.isEmpty()) and square.peek().color == color:
+                    diagonalCounter += 1;
+            if diagonalCounter == 3:
+                for square in main_diagonal:
+                    if (square.isEmpty()):
+                        return True
+
+        elif rowS + colS == 4:
+            secondary_diagonal = [board[i][4 - i] for i in range(1, 5)]
+            diagonalCounter = 0
+            for square in secondary_diagonal:
+                if not (square.isEmpty()) and square.peek().color == color:
+                    diagonalCounter += 1;
+            if diagonalCounter == 3:
+                for square in secondary_diagonal:
+                    if (square.isEmpty()):
+                        return True
 
     return False
 
