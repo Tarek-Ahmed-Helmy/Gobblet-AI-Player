@@ -41,4 +41,35 @@ def check_winner(realBorad):
 
 
 
-    return False  # Return None if there's no winne
+    return False  # Return None if there's no winner
+
+
+def can_play(board, rowS, colS, Gcolor):
+    if board[rowS][colS].isEmpty() or board[rowS][colS].peek().color == Gcolor:
+        return True
+    else:
+        color = board[rowS][colS].peek().color;
+        rowCounter = 0;
+        for col in board[rowS]:
+            if not(col.isEmpty()) and col.peek().color == color:
+                rowCounter += 1;
+        if rowCounter == 3 :
+            for col in board[rowS]:
+                if(col.isEmpty()):
+                    return True
+
+        columnCounter = 0;
+        columnArray = [board[row][colS] for row in range(1,5)]
+        for row in columnArray:
+            if not(row.isEmpty()) and row.peek().color == color:
+                columnCounter += 1;
+        if columnCounter == 3 :
+            for row in columnArray:
+                if (row.isEmpty()):
+                    return True
+
+
+    return False
+
+
+

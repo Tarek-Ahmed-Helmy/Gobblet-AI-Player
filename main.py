@@ -102,9 +102,11 @@ def main():
                                  # Get the square position
                                     rowS,colS=get_row_col_from_click_onBoard(posSquare)
                                     rowG,colG=get_row_col_from_click_onGobblet(pos,RED)
-                                    board.put_piece(rowG,colG,rowS,colS,Screen)
-                                    pygame.display.update()
-                                    print(check_winner(board.board))
+                                    if can_play(board.board, rowS, colS, RED):
+                                        board.put_piece(rowG,colG,rowS,colS,Screen)
+                                        pygame.display.update()
+                                    else:
+                                        print("Cannot Play")
 
                 elif not(is_within_board(pos)) and clicked_color == NAVY:
                     # Wait for the second click
@@ -123,9 +125,11 @@ def main():
                                  # Get the square position
                                     rowS,colS=get_row_col_from_click_onBoard(posSquare)
                                     rowG,colG=get_row_col_from_click_onGobblet(pos,NAVY)
-                                    board.put_piece(rowG,colG,rowS,colS,Screen)
-                                    pygame.display.update()
-                                    print(check_winner(board.board))
+                                    if can_play(board.board, rowS, colS,NAVY):
+                                        board.put_piece(rowG,colG,rowS,colS,Screen)
+                                        pygame.display.update()
+                                    else:
+                                        print("Cannot Play")
 
                 else:
                     pass
