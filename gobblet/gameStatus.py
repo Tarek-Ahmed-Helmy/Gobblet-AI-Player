@@ -45,11 +45,13 @@ def check_winner(realBorad):
 
 
 def can_play(board, rowS, colS, Gcolor):
+    #checking the desired place is empty or having a gobblet of the same color
     if board[rowS][colS].isEmpty() or board[rowS][colS].peek().color == Gcolor:
         return True
     else:
         color = board[rowS][colS].peek().color;
         rowCounter = 0;
+        #checking if the opponent is close to win from the row
         for col in board[rowS]:
             if not(col.isEmpty()) and col.peek().color == color:
                 rowCounter += 1;
@@ -58,6 +60,7 @@ def can_play(board, rowS, colS, Gcolor):
                 if(col.isEmpty()):
                     return True
 
+        # checking if the opponent is close to win from the column
         columnCounter = 0;
         columnArray = [board[row][colS] for row in range(1,5)]
         for row in columnArray:
@@ -68,6 +71,7 @@ def can_play(board, rowS, colS, Gcolor):
                 if (row.isEmpty()):
                     return True
 
+        # checking if the gobblet in the main diagonal and is close to win from it
         if rowS == colS + 1:
             main_diagonal = [board[i + 1][i] for i in range(4)]
             diagonalCounter = 0
@@ -79,6 +83,7 @@ def can_play(board, rowS, colS, Gcolor):
                     if (square.isEmpty()):
                         return True
 
+        # checking if the gobblet in the secondary diagonal and is close to win from it
         elif rowS + colS == 4:
             secondary_diagonal = [board[i][4 - i] for i in range(1, 5)]
             diagonalCounter = 0
@@ -90,7 +95,7 @@ def can_play(board, rowS, colS, Gcolor):
                     if (square.isEmpty()):
                         return True
 
-    return False
+    return False    # Return None if the opponent is not about to win
 
 
 
