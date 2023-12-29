@@ -20,14 +20,7 @@ def show_winner(winner):
     label.pack(padx=50, pady=50)
     root.mainloop()
 
-# def player_vs_player():
-    
-
-def main():
-    # mainWindow = Tk()
-    # button = Button(mainWindow, text="Player vs Player", command=startGame())
-    # button.pack()
-    # mainWindow.mainloop()
+def player_vs_player():
     Screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Gobblet")
     in_game = True
@@ -61,7 +54,7 @@ def main():
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     pos = pygame.mouse.get_pos()
-                    clicked_color = get_color_at_position(pos)
+                    clicked_color = get_color_at_position(pos, Screen)
                     game.movePiece(pos, clicked_color, Screen)
 
             game.updateScreen(Screen)
@@ -72,6 +65,47 @@ def main():
                 tkinter_thread.start()
                 run = False
 
-    pygame.quit()   
+    pygame.quit()
+
+def startGame(game_mode, mainWindow):
+    if game_mode == 1:
+        mainWindow.destroy()   
+        player_vs_player()
+    
+
+def chooseLevel(mainWindow):
+    mainWindow.destroy()
+    chooseWindow = Tk()
+    button = Button(chooseWindow, text="Easy", command=lambda: startGame(2, mainWindow))
+    button.pack()
+    button = Button(chooseWindow, text="Hard", command=lambda: startGame(3, mainWindow))
+    button.pack()
+    chooseWindow.mainloop()
+
+def chooseLevel_AI(mainWindow):
+    mainWindow.destroy()
+    chooseWindow = Tk()
+    button = Button(chooseWindow, text="Easy vs Hard", command=lambda: startGame(4, mainWindow))
+    button.pack()
+    button = Button(chooseWindow, text="Hard vs Easy", command=lambda: startGame(5, mainWindow))
+    button.pack()
+    button = Button(chooseWindow, text="Easy vs Easy", command=lambda: startGame(6, mainWindow))
+    button.pack()
+    button = Button(chooseWindow, text="Hard vs Hard", command=lambda: startGame(7, mainWindow))
+    button.pack()
+    chooseWindow.mainloop()
+    
+
+def main():
+    mainWindow = Tk()
+    button = Button(mainWindow, text="Player vs Player", command=lambda: startGame(1, mainWindow))
+    button.pack()
+    button = Button(mainWindow, text="Player vs AI", command=lambda: chooseLevel(2, mainWindow))
+    button.pack()
+    button = Button(mainWindow, text="AI vs AI", command=lambda: startGame(3, mainWindow))
+    button.pack()
+
+    mainWindow.mainloop()
+    
 
 main()

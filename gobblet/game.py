@@ -13,7 +13,7 @@ class Game:
         self.cur_score = 0, 0
     
     def insert_text(self, text, font_size, text_color):
-       
+        
         font = pygame.font.Font(None, font_size)  # You can also specify a font file if you have one
         text_surface = font.render(text, True, text_color)
         
