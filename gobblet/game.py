@@ -5,10 +5,11 @@ from .gameStatus import *
 
 class Game:
     def __init__(self,Screen) -> None:
-        self.turn=NAVY  
+        self.turn=NAVY
         self.board=Board()
         self.board.create_board()
         self.Screen=Screen
+        self.winner=None
 
     def updateScreen(self,Screen):
         self.board.draw_squares(Screen)
@@ -51,6 +52,19 @@ class Game:
             row = 5
         col = round(col_temp)
         return int(row), int(col)
+    
+    def change_turn(self):
+        if self.turn == NAVY:
+            self.turn = RED
+        else:
+            self.turn = NAVY
+
+    def set_winner(self):
+        winner = check_winner(self.board.board)
+        if winner == (43, 42, 76):
+            self.winner = "NAVY wins"
+        elif winner == (179, 19, 18):
+            self.winner = "RED wins"
 
     def move(self, Screen, pos, color):
         # Wait for the second click
@@ -69,16 +83,22 @@ class Game:
                     # Get the square position
                         rowG, colG, rowS, colS = self.get_square_position(pos, posSquare, color)
                         if(color == None):
-                            self.board.put_piece(rowG,colG,rowS,colS,Screen)
-                            print(check_winner(self.board.board))
+                            is_moved = self.board.put_piece(rowG,colG,rowS,colS,Screen)
+                            if is_moved:
+                                self.set_winner()
+                                self.change_turn()
                         else:
                             if can_play(self.board.board, rowS, colS, color):
-                                self.board.put_piece(rowG,colG,rowS,colS,Screen)
-                                print(check_winner(self.board.board))
+                                is_moved = self.board.put_piece(rowG,colG,rowS,colS,Screen)
+                                if is_moved:
+                                    self.set_winner()
+                                    self.change_turn()
                             else:
                                 print("Cannot Play")
 
-    def movePiece(self,pos,clicked_color,Screen):
+    def movePiece(self, pos, clicked_color, Screen):
+        if self.turn != clicked_color:
+            return
         if self.is_within_board(pos) and (clicked_color == RED or clicked_color == NAVY):
             self.move( Screen, pos, None)    
 

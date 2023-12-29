@@ -11,7 +11,7 @@ class Board:
         screen.fill(GREY)
         for row in range(ROWS):
             for col in range(COLUMNS):
-                pygame.draw.rect(screen,ORANGE,(row*SQUARE_SIZE+PADDING,col*SQUARE_SIZE+PADDING,SQUARE_SIZE,SQUARE_SIZE))
+                pygame.draw.rect(screen, ORANGE,(row*SQUARE_SIZE+PADDING,col*SQUARE_SIZE+PADDING,SQUARE_SIZE,SQUARE_SIZE))
                 pygame.draw.rect(screen, BLACK,(row*SQUARE_SIZE+PADDING, col*SQUARE_SIZE+PADDING,SQUARE_SIZE,SQUARE_SIZE),1)
 
     def draw_pieces(self,screen):
@@ -20,10 +20,7 @@ class Board:
                 if self.board[i][j].isEmpty() == False:
                     self.board[i][j].peek().draw(screen)
 
-
-
-
-     # still no Need
+    # still no Need
     def identify_empty_squares(self):
         empty_squares = []
         for row_idx, row in enumerate(self.board):
@@ -31,7 +28,6 @@ class Board:
                 if col.isEmpty():
                     empty_squares.append((row_idx, col_idx))
         return empty_squares
-
 
     # gobblet is the start, screen is the destination
     def put_piece(self,rowG,colG,rowS,colS,screen):
@@ -42,9 +38,9 @@ class Board:
                 piece.y = (rowS-1) * SQUARE_SIZE + PADDING + SQUARE_SIZE // 2
                 self.board[rowS][colS].push(piece)
                 self.draw_pieces(screen)
-            
-            
-       
+                return True
+        return False
+
     def create_board(self):
         gobblet_sizes=[SIZE1, SIZE2, SIZE3, SIZE4]
         stack1 = Stack()

@@ -1,19 +1,19 @@
-def check_winner(realBorad):
+def check_winner(realBoard):
     # Check rows for a winner
-    board = realBorad[1:5];
+    board = realBoard[1:5];
     for row in board:
         if not (row[0].isEmpty()):
-            color = row[0].peek().color;
+            color = row[0].peek().color
             if (all(not(row[col].isEmpty()) and row[col].peek().color == color for col in range(1, len(row)))):
-                return True;
+                return color
 
     # Check columns for a winner
     for col in range(len(board[0])):
         columnArray = [board[row][col] for row in range(4)]
         if not (columnArray[0].isEmpty()):
-            color = columnArray[0].peek().color;
+            color = columnArray[0].peek().color
             if(all(not(columnArray[row].isEmpty()) and columnArray[row].peek().color == color for row in range(1, len(columnArray)))):
-                return True;
+                return color
 
     # Check diagonals (top-left to bottom-right) for a winner
     isBroken = False
@@ -24,7 +24,7 @@ def check_winner(realBorad):
                 isBroken = True
                 break
         if(not isBroken):
-            return True
+            return color
 
     # Check diagonals (top-right to bottom-left) for a winner
     isBroken = False
@@ -35,7 +35,7 @@ def check_winner(realBorad):
                 isBroken = True
                 break
         if (not isBroken):
-            return True
+            return color
 
 
 
