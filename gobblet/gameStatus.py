@@ -46,7 +46,6 @@ def check_winner(realBorad):
 
 def can_play(board, rowS, colS, Gcolor):
     #checking the desired place is empty or having a gobblet of the same color
-    print(board)
     if board[rowS][colS].isEmpty() or board[rowS][colS].peek().color == Gcolor:
         return True
     else:

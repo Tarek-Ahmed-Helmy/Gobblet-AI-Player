@@ -33,7 +33,7 @@ class Board:
         return empty_squares
 
 
-    
+    # gobblet is the start, screen is the destination
     def put_piece(self,rowG,colG,rowS,colS,screen):
         if not(self.board[rowG][colG].isEmpty()):
             if self.board[rowS][colS].isEmpty() or self.board[rowG][colG].peek().size > self.board[rowS][colS].peek().size:

@@ -15,6 +15,14 @@ class Game:
         self.board.draw_pieces(Screen)
         pygame.display.update()
     
+    def get_square_position(self,pos ,posSquare, color):
+        if color != None:
+            rowG,colG=self.get_row_col_from_click_onGobblet(pos,color)
+        else:
+            rowG,colG=self.get_row_col_from_click_onBoard(pos)
+
+        rowS,colS=self.get_row_col_from_click_onBoard(posSquare)
+        return rowG, colG, rowS, colS
 
     # Function to check if the click is within the board
     def is_within_board(self,pos):
@@ -44,75 +52,42 @@ class Game:
         col = round(col_temp)
         return int(row), int(col)
 
-    def movePiece(self,pos,clicked_color,Screen):
-        if self.is_within_board(pos) and (clicked_color == RED or clicked_color == NAVY):
-                    # Wait for the second click
-                    second_click = False
-                    while not second_click:
-                        for event in pygame.event.get():
-                            if event.type == pygame.QUIT:
-                                pygame.quit()
-                                run=False
-                            elif event.type == pygame.MOUSEBUTTONDOWN :
-                                second_click=True
-                                posSquare = pygame.mouse.get_pos()
-                                if not(self.self.is_within_board(posSquare)):
-                                    pass
-                                elif self.self.is_within_board(posSquare):
-                                # Get the square position
-                                    rowS,colS=self.get_row_col_from_click_onBoard(posSquare)
-                                    rowG,colG=self.get_row_col_from_click_onBoard(pos)
-                                    self.board.put_piece(rowG,colG,rowS,colS,Screen)
-                                    pygame.display.update()
-                                    print(check_winner(self.board))
-
-        elif not(self.is_within_board(pos)) and clicked_color == RED:
-                    # Wait for the second click
-                    second_click = False
-                    while not second_click:
-                        for event in pygame.event.get():
-                            if event.type == pygame.QUIT:
-                                pygame.quit()
-                                run=False
-                            elif event.type == pygame.MOUSEBUTTONDOWN :
-                                second_click=True
-                                posSquare = pygame.mouse.get_pos()
-                                if not(self.is_within_board(posSquare)):
-                                    pass
-                                elif self.is_within_board(posSquare):
-                                # Get the square position
-                                    rowS,colS=self.get_row_col_from_click_onBoard(posSquare)
-                                    rowG,colG=self.get_row_col_from_click_onGobblet(pos,RED)
-                                    if can_play(self.board, rowS, colS, RED):
-                                        self.board.put_piece(rowG,colG,rowS,colS,Screen)
-                                        pygame.display.update()
-                                        print(check_winner(self.board))
-                                    else:
-                                        print("Cannot Play")
-
-        elif not(self.is_within_board(pos)) and clicked_color == NAVY:
-            # Wait for the second click
-            second_click = False
-            while not second_click:
-                for event in pygame.event.get():
-                    if event.type == pygame.QUIT:
-                        pygame.quit()
-                        run=False
-                    elif event.type == pygame.MOUSEBUTTONDOWN :
-                        second_click=True
-                        posSquare = pygame.mouse.get_pos()
-                        if not(self.is_within_board(posSquare)):
-                            pass
-                        elif self.is_within_board(posSquare):
-                            # Get the square position
-                            rowS,colS=self.get_row_col_from_click_onBoard(posSquare)
-                            rowG,colG=self.get_row_col_from_click_onGobblet(pos,NAVY)
-                            if can_play(self.board, rowS, colS,NAVY):
+    def move(self, Screen, pos, color):
+        # Wait for the second click
+        second_click = False
+        while not second_click:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    run=False
+                elif event.type == pygame.MOUSEBUTTONDOWN :
+                    second_click=True
+                    posSquare = pygame.mouse.get_pos()
+                    if not(self.is_within_board(posSquare)):
+                        pass
+                    elif self.is_within_board(posSquare):
+                    # Get the square position
+                        rowG, colG, rowS, colS = self.get_square_position(pos, posSquare, color)
+                        if(color == None):
+                            self.board.put_piece(rowG,colG,rowS,colS,Screen)
+                            print(check_winner(self.board.board))
+                        else:
+                            if can_play(self.board.board, rowS, colS, color):
                                 self.board.put_piece(rowG,colG,rowS,colS,Screen)
-                                pygame.display.update()
-                                print(check_winner(self.board))
+                                print(check_winner(self.board.board))
                             else:
                                 print("Cannot Play")
+
+    def movePiece(self,pos,clicked_color,Screen):
+        if self.is_within_board(pos) and (clicked_color == RED or clicked_color == NAVY):
+            self.move( Screen, pos, None)    
+
+        elif not(self.is_within_board(pos)) and clicked_color == RED:
+            self.move( Screen, pos, RED)
+            
+        elif not(self.is_within_board(pos)) and clicked_color == NAVY:
+            self.move( Screen, pos, NAVY)
+            
         else:
             pass
         
