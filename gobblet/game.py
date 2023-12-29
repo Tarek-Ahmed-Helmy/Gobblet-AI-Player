@@ -10,10 +10,32 @@ class Game:
         self.board.create_board()
         self.Screen=Screen
         self.winner=None
-
+        self.cur_score = 0, 0
+    
+    def insert_text(self, text, font_size, text_color):
+       
+        font = pygame.font.Font(None, font_size)  # You can also specify a font file if you have one
+        text_surface = font.render(text, True, text_color)
+        
+        return text_surface
+        
+        
     def updateScreen(self,Screen):
+        score1 = self.insert_text(f"RED: {self.cur_score[1]}", 36, (0, 0, 0))
+        score2 = self.insert_text('-'*10, 36, (0, 0, 0))
+        score3 = self.insert_text(f"NAVY: {self.cur_score[0]}", 36, (0, 0, 0))
+        player_turn1 = self.insert_text("Player Turn", 36, (0, 0, 0))
+        if self.turn == RED:
+            player_turn2 = self.insert_text("RED", 36, self.turn)
+        else:
+            player_turn2 = self.insert_text("NAVY", 36, self.turn)
         self.board.draw_squares(Screen)
         self.board.draw_pieces(Screen)
+        Screen.blit(score1, (20, WIDTH/(WIN_LEN/362.5)))
+        Screen.blit(score2, (20, WIDTH/(WIN_LEN/487.5)))
+        Screen.blit(score3, (20, WIDTH/(WIN_LEN/612.5)))
+        Screen.blit(player_turn1, (650, WIDTH/(WIN_LEN/425)))
+        Screen.blit(player_turn2, (680, WIDTH/(WIN_LEN/487.5)))
         pygame.display.update()
     
     def get_square_position(self,pos ,posSquare, color):
@@ -86,7 +108,7 @@ class Game:
                             is_moved = self.board.put_piece(rowG,colG,rowS,colS,Screen)
                             if is_moved:
                                 self.set_winner()
-                                self.change_turn()
+                            self.change_turn()
                         else:
                             if can_play(self.board.board, rowS, colS, color):
                                 is_moved = self.board.put_piece(rowG,colG,rowS,colS,Screen)
