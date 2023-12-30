@@ -1,7 +1,10 @@
+from copy import deepcopy
+import random
 import pygame
 from .constants import *
 from .piece import Piece
 from .stack import Stack
+from .gameStatus import *
 
 class Board:
     def __init__(self):
@@ -65,3 +68,49 @@ class Board:
         for i in range(len(player1)):
             for size in gobblet_sizes:
                 player1[i].push(Piece((i+1)*WIDTH/(WIN_LEN/250),HEIGHT/(WIN_LEN/900),NAVY,size))
+
+
+    def get_all_pieces(self, color):
+        pieces = []
+        for row, list in enumerate(self.board):
+            for col, item in enumerate(list):
+                if not item.isEmpty() and item.peek().color == color:
+                    pieces.append([row, col, item.peek()])
+
+        return pieces
+    
+
+    def get_valid_moves(self, piece):
+        valid_moves = []
+        board = self.board[1:5]
+        if piece[0] in [0,5]:
+            for row, list in enumerate(board):
+                for col, item in enumerate(list):
+                    if item.isEmpty():
+                        valid_moves.append([row+1, col])
+                    else:
+                        if can_play(self.board, row+1, col, piece[2].color):
+                            if piece[2].size > item.peek().size:
+                                valid_moves.append([row+1, col])
+        else:
+            for row, list in enumerate(board):
+                for col, item in enumerate(list):
+                    if item.isEmpty() or piece[2].size > item.peek().size:
+                        valid_moves.append([row+1, col])
+
+        return valid_moves
+
+    # we need to implement evaluate function not rand
+    def evaluate(self):
+        return random.randint(-10, 10)
+    
+    def print_board(self):
+        printed_board = deepcopy(self.board)
+        for row, list in enumerate(printed_board):
+            for col, item in enumerate(list):
+                if not item.isEmpty():
+                    printed_board[row][col] = item.peek().color, item.peek().size
+                else:
+                    printed_board[row][col] = 0
+
+            print(printed_board[row])

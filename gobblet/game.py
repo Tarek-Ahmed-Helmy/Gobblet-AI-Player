@@ -138,3 +138,7 @@ class Game:
         else:
             pass
         
+
+    def computer_move(self):
+        self.set_winner()
+        self.change_turn()
