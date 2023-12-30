@@ -2,6 +2,7 @@ import pygame
 from .constants import *
 from .board import Board
 from .gameStatus import *
+from .button import Button
 
 class Game:
     def __init__(self,Screen) -> None:
@@ -11,9 +12,10 @@ class Game:
         self.Screen=Screen
         self.winner=None
         self.cur_score = 0, 0
+        self.status = "running"
+        self.restart_button=None
     
     def insert_text(self, text, font_size, text_color):
-        
         font = pygame.font.Font(None, font_size)  # You can also specify a font file if you have one
         text_surface = font.render(text, True, text_color)
         
@@ -21,6 +23,7 @@ class Game:
         
         
     def updateScreen(self,Screen):
+        pygame.font.init()
         score1 = self.insert_text(f"RED: {self.cur_score[1]}", 36, (0, 0, 0))
         score2 = self.insert_text('-'*10, 36, (0, 0, 0))
         score3 = self.insert_text(f"NAVY: {self.cur_score[0]}", 36, (0, 0, 0))
@@ -29,6 +32,7 @@ class Game:
             player_turn2 = self.insert_text("RED", 36, self.turn)
         else:
             player_turn2 = self.insert_text("NAVY", 36, self.turn)
+        self.restart_button = Button(2, 25, 100, 40, RED, "Restart", Screen)
         self.board.draw_squares(Screen)
         self.board.draw_pieces(Screen)
         Screen.blit(score1, (20, WIDTH/(WIN_LEN/362.5)))
@@ -36,6 +40,7 @@ class Game:
         Screen.blit(score3, (20, WIDTH/(WIN_LEN/612.5)))
         Screen.blit(player_turn1, (650, WIDTH/(WIN_LEN/425)))
         Screen.blit(player_turn2, (680, WIDTH/(WIN_LEN/487.5)))
+        self.restart_button.draw()
         pygame.display.update()
     
     def get_square_position(self,pos ,posSquare, color):

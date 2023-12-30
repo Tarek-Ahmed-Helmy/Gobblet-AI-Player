@@ -9,6 +9,8 @@ from gobblet.gameStatus import *
 # clock ticks
 FPS = 60
 
+NAVY_player = 0
+Red_player = 0
 # Function to convert get color
 def get_color_at_position(mouse_pos, Screen):
     color = Screen.get_at(mouse_pos)
@@ -21,11 +23,11 @@ def show_winner(winner):
     root.mainloop()
 
 def player_vs_player():
+    global NAVY_player
+    global Red_player
     Screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Gobblet")
     in_game = True
-    NAVY_player = 0
-    Red_player = 0
     start = True
     while in_game:
         if start:
@@ -53,6 +55,9 @@ def player_vs_player():
                     in_game = False
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
+                    if game.restart_button.rect.collidepoint(event.pos):
+                        pygame.quit()
+                        player_vs_player()
                     pos = pygame.mouse.get_pos()
                     clicked_color = get_color_at_position(pos, Screen)
                     game.movePiece(pos, clicked_color, Screen)
