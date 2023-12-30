@@ -1,6 +1,6 @@
 def check_winner(realBoard):
     # Check rows for a winner
-    board = realBoard[1:5];
+    board = realBoard[1:5]
     for row in board:
         if not (row[0].isEmpty()):
             color = row[0].peek().color
@@ -37,10 +37,6 @@ def check_winner(realBoard):
         if (not isBroken):
             return color
 
-
-
-
-
     return False  # Return None if there's no winner
 
 
@@ -49,23 +45,23 @@ def can_play(board, rowS, colS, Gcolor):
     if board[rowS][colS].isEmpty() or board[rowS][colS].peek().color == Gcolor:
         return True
     else:
-        color = board[rowS][colS].peek().color;
-        rowCounter = 0;
+        color = board[rowS][colS].peek().color
+        rowCounter = 0
         #checking if the opponent is close to win from the row
         for col in board[rowS]:
             if not(col.isEmpty()) and col.peek().color == color:
-                rowCounter += 1;
+                rowCounter += 1
         if rowCounter == 3 :
             for col in board[rowS]:
                 if(col.isEmpty()):
                     return True
 
         # checking if the opponent is close to win from the column
-        columnCounter = 0;
+        columnCounter = 0
         columnArray = [board[row][colS] for row in range(1,5)]
         for row in columnArray:
             if not(row.isEmpty()) and row.peek().color == color:
-                columnCounter += 1;
+                columnCounter += 1
         if columnCounter == 3 :
             for row in columnArray:
                 if (row.isEmpty()):
