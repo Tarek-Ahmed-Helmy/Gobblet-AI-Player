@@ -120,8 +120,7 @@ class Board:
             elif RedNum > 0 and NavyNum == 0:
                 Red *= RedNum
             elif NavyNum > 0 and RedNum > 0:
-                Navy -= NavyNum
-                Red -= RedNum
+                Red -= RedNum * NavyNum
             NavyNum = 0
             RedNum = 0
         for col in range(len(self.board[1])):
@@ -140,14 +139,13 @@ class Board:
             elif RedNum > 0 and NavyNum == 0:
                 Red *= RedNum
             elif NavyNum > 0 and RedNum > 0:
-                Navy -= NavyNum
-                Red -= RedNum
+                Red -= RedNum * NavyNum
             NavyNum = 0
             RedNum = 0
         if check_winner(self.board) == RED:
-            return 100
+            return float('inf')
         elif check_winner(self.board) == NAVY:
-            return -100
+            return float('-inf')
         else:
             return Red - Navy
     def print_board(self):

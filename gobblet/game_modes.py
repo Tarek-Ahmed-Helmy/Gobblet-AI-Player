@@ -93,7 +93,7 @@ def player_vs_ai_easy(NAVY_player=0, Red_player=0):
         while run:
             clock.tick(FPS)
             if game.turn == RED:
-                value, new_board = minimax(game.board, 2, True)
+                value, new_board = minimax(game.board, 1, True)
                 game.board = new_board
                 game.computer_move()
             for event in pygame.event.get():
