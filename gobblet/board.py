@@ -145,9 +145,9 @@ class Board:
             NavyNum = 0
             RedNum = 0
         if check_winner(self.board) == RED:
-            return 50
+            return 80
         elif check_winner(self.board) == NAVY:
-            return -50
+            return -80
         else:
             return Red - Navy
     def print_board(self):
