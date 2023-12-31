@@ -9,8 +9,6 @@ from minimax.algorithm import *
 # clock ticks
 FPS = 60
 
-NAVY_player = 0
-Red_player = 0
 
 # Function to convert get color
 def get_color_at_position(mouse_pos, Screen):
@@ -23,9 +21,7 @@ def show_winner(winner):
     label.pack(padx=50, pady=50)
     root.mainloop()
 
-def player_vs_player():
-    global NAVY_player
-    global Red_player
+def player_vs_player(NAVY_player=0, Red_player=0):
     Screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Gobblet")
     in_game = True
@@ -56,7 +52,10 @@ def player_vs_player():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if game.restart_button.rect.collidepoint(event.pos):
                         pygame.quit()
-                        player_vs_player()
+                        return player_vs_player(NAVY_player, Red_player)
+                    if game.start_menu_button.rect.collidepoint(event.pos):
+                        pygame.quit()
+                        return "game modes"
                     pos = pygame.mouse.get_pos()
                     clicked_color = get_color_at_position(pos, Screen)
                     game.movePiece(pos, clicked_color, Screen)
@@ -69,9 +68,7 @@ def player_vs_player():
                 run = False
     pygame.quit()
 
-def player_vs_ai_easy():
-    global NAVY_player
-    global Red_player
+def player_vs_ai_easy(NAVY_player=0, Red_player=0):
     Screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Gobblet")
     in_game = True
@@ -106,7 +103,10 @@ def player_vs_ai_easy():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if game.restart_button.rect.collidepoint(event.pos):
                         pygame.quit()
-                        player_vs_ai_easy()
+                        return player_vs_ai_easy(NAVY_player, Red_player)
+                    if game.start_menu_button.rect.collidepoint(event.pos):
+                        pygame.quit()
+                        return "game modes"
                     pos = pygame.mouse.get_pos()
                     clicked_color = get_color_at_position(pos, Screen)
                     game.movePiece(pos, clicked_color, Screen)
@@ -119,9 +119,7 @@ def player_vs_ai_easy():
                 run = False
     pygame.quit()
 
-def player_vs_ai_hard():
-    global NAVY_player
-    global Red_player
+def player_vs_ai_hard(NAVY_player=0, Red_player=0):
     Screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Gobblet")
     in_game = True
@@ -156,7 +154,10 @@ def player_vs_ai_hard():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if game.restart_button.rect.collidepoint(event.pos):
                         pygame.quit()
-                        player_vs_ai_easy()
+                        return player_vs_ai_hard(NAVY_player, Red_player)
+                    if game.start_menu_button.rect.collidepoint(event.pos):
+                        pygame.quit()
+                        return "game modes"
                     pos = pygame.mouse.get_pos()
                     clicked_color = get_color_at_position(pos, Screen)
                     game.movePiece(pos, clicked_color, Screen)
@@ -169,9 +170,7 @@ def player_vs_ai_hard():
                 run = False
     pygame.quit()
 
-def ai_ez_vs_ai_hd():
-    global NAVY_player
-    global Red_player
+def ai_ez_vs_ai_hd(NAVY_player=0, Red_player=0):
     Screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Gobblet")
     in_game = True
@@ -211,7 +210,10 @@ def ai_ez_vs_ai_hd():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if game.restart_button.rect.collidepoint(event.pos):
                         pygame.quit()
-                        ai_ez_vs_ai_ez()
+                        return ai_ez_vs_ai_hd(NAVY_player, Red_player)
+                    if game.start_menu_button.rect.collidepoint(event.pos):
+                        pygame.quit()
+                        return "game modes"
             game.updateScreen(Screen)
             if game.winner and not winner_shown:
                 winner_shown = True
@@ -221,9 +223,7 @@ def ai_ez_vs_ai_hd():
                 run = False
     pygame.quit()
 
-def ai_hd_vs_ai_ez():
-    global NAVY_player
-    global Red_player
+def ai_hd_vs_ai_ez(NAVY_player=0, Red_player=0):
     Screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Gobblet")
     in_game = True
@@ -263,7 +263,10 @@ def ai_hd_vs_ai_ez():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if game.restart_button.rect.collidepoint(event.pos):
                         pygame.quit()
-                        ai_ez_vs_ai_ez()
+                        return ai_hd_vs_ai_ez(NAVY_player, Red_player)
+                    if game.start_menu_button.rect.collidepoint(event.pos):
+                        pygame.quit()
+                        return "game modes"
             game.updateScreen(Screen)
             if game.winner and not winner_shown:
                 winner_shown = True
@@ -273,9 +276,7 @@ def ai_hd_vs_ai_ez():
                 run = False
     pygame.quit()
 
-def ai_ez_vs_ai_ez():
-    global NAVY_player
-    global Red_player
+def ai_ez_vs_ai_ez(NAVY_player=0, Red_player=0):
     Screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Gobblet")
     in_game = True
@@ -315,7 +316,10 @@ def ai_ez_vs_ai_ez():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if game.restart_button.rect.collidepoint(event.pos):
                         pygame.quit()
-                        ai_ez_vs_ai_ez()
+                        return ai_ez_vs_ai_ez(NAVY_player, Red_player)
+                    if game.start_menu_button.rect.collidepoint(event.pos):
+                        pygame.quit()
+                        return "game modes"
             game.updateScreen(Screen)
             if game.winner and not winner_shown:
                 winner_shown = True
@@ -325,9 +329,7 @@ def ai_ez_vs_ai_ez():
                 run = False
     pygame.quit()
 
-def ai_hd_vs_ai_hd():
-    global NAVY_player
-    global Red_player
+def ai_hd_vs_ai_hd(NAVY_player=0, Red_player=0):
     Screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Gobblet")
     in_game = True
@@ -367,7 +369,10 @@ def ai_hd_vs_ai_hd():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if game.restart_button.rect.collidepoint(event.pos):
                         pygame.quit()
-                        ai_ez_vs_ai_ez()
+                        return ai_hd_vs_ai_hd(NAVY_player, Red_player)
+                    if game.start_menu_button.rect.collidepoint(event.pos):
+                        pygame.quit()
+                        return "game modes"
             game.updateScreen(Screen)
             if game.winner and not winner_shown:
                 winner_shown = True
