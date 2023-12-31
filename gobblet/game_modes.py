@@ -96,20 +96,21 @@ def player_vs_ai_easy(NAVY_player=0, Red_player=0):
                 value, new_board = minimax(game.board, 1, True)
                 game.board = new_board
                 game.computer_move()
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    run = False
-                    in_game = False
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    if game.restart_button.rect.collidepoint(event.pos):
-                        pygame.quit()
-                        return player_vs_ai_easy(NAVY_player, Red_player)
-                    if game.start_menu_button.rect.collidepoint(event.pos):
-                        pygame.quit()
-                        return "game modes"
-                    pos = pygame.mouse.get_pos()
-                    clicked_color = get_color_at_position(pos, Screen)
-                    game.movePiece(pos, clicked_color, Screen)
+            elif game.turn == NAVY:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        run = False
+                        in_game = False
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        if game.restart_button.rect.collidepoint(event.pos):
+                            pygame.quit()
+                            return player_vs_ai_hard(NAVY_player, Red_player)
+                        if game.start_menu_button.rect.collidepoint(event.pos):
+                            pygame.quit()
+                            return "game modes"
+                        pos = pygame.mouse.get_pos()
+                        clicked_color = get_color_at_position(pos, Screen)
+                        game.movePiece(pos, clicked_color, Screen)
             game.updateScreen(Screen)
             if game.winner and not winner_shown:
                 winner_shown = True
@@ -149,7 +150,6 @@ def player_vs_ai_hard(NAVY_player=0, Red_player=0):
                 game.computer_move()
             elif game.turn == NAVY:
                 for event in pygame.event.get():
-                    print('i am here')
                     if event.type == pygame.QUIT:
                         run = False
                         in_game = False
