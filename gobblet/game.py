@@ -14,14 +14,12 @@ class Game:
         self.cur_score = 0, 0
         self.status = "running"
         self.restart_button=None
-    
+
     def insert_text(self, text, font_size, text_color):
         font = pygame.font.Font(None, font_size)  # You can also specify a font file if you have one
         text_surface = font.render(text, True, text_color)
-        
         return text_surface
-        
-        
+
     def updateScreen(self,Screen):
         pygame.font.init()
         score1 = self.insert_text(f"RED: {self.cur_score[1]}", 36, (0, 0, 0))
@@ -42,13 +40,12 @@ class Game:
         Screen.blit(player_turn2, (680, WIDTH/(WIN_LEN/487.5)))
         self.restart_button.draw()
         pygame.display.update()
-    
+
     def get_square_position(self,pos ,posSquare, color):
         if color != None:
             rowG,colG=self.get_row_col_from_click_onGobblet(pos,color)
         else:
             rowG,colG=self.get_row_col_from_click_onBoard(pos)
-
         rowS,colS=self.get_row_col_from_click_onBoard(posSquare)
         return rowG, colG, rowS, colS
 
@@ -79,7 +76,7 @@ class Game:
             row = 5
         col = round(col_temp)
         return int(row), int(col)
-    
+
     def change_turn(self):
         if self.turn == NAVY:
             self.turn = RED
@@ -128,16 +125,12 @@ class Game:
             return
         if self.is_within_board(pos) and (clicked_color == RED or clicked_color == NAVY):
             self.move( Screen, pos, None)    
-
         elif not(self.is_within_board(pos)) and clicked_color == RED:
             self.move( Screen, pos, RED)
-            
         elif not(self.is_within_board(pos)) and clicked_color == NAVY:
             self.move( Screen, pos, NAVY)
-            
         else:
             pass
-        
 
     def computer_move(self):
         self.set_winner()
