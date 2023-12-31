@@ -93,7 +93,7 @@ def player_vs_ai_easy(NAVY_player=0, Red_player=0):
         while run:
             clock.tick(FPS)
             if game.turn == RED:
-                value, new_board = minimax(game.board, 1, True)
+                value, new_board = minimax(game.board, 1, True, "easy")
                 game.board = new_board
                 game.computer_move()
             elif game.turn == NAVY:
@@ -145,7 +145,7 @@ def player_vs_ai_hard(NAVY_player=0, Red_player=0):
         while run:
             clock.tick(FPS)
             if game.turn == RED:
-                value, new_board = minimax(game.board, 2, True)
+                value, new_board = minimax(game.board, 2, True, "hard")
                 game.board = new_board
                 game.computer_move()
             elif game.turn == NAVY:
@@ -198,11 +198,11 @@ def ai_ez_vs_ai_hd(NAVY_player=0, Red_player=0):
         while run:
             clock.tick(FPS)
             if game.turn == RED:
-                value, new_board = minimax(game.board, 1, True)
+                value, new_board = minimax(game.board, 1, True, "easy")
                 game.board = new_board
                 game.computer_move()
             elif game.turn == NAVY:
-                value, new_board = minimax(game.board, 2, False)
+                value, new_board = minimax(game.board, 2, False, "hard")
                 game.board = new_board
                 game.computer_move()
             for event in pygame.event.get():
@@ -251,11 +251,11 @@ def ai_hd_vs_ai_ez(NAVY_player=0, Red_player=0):
         while run:
             clock.tick(FPS)
             if game.turn == RED:
-                value, new_board = minimax(game.board, 2, True)
+                value, new_board = minimax(game.board, 2, True, "hard")
                 game.board = new_board
                 game.computer_move()
             elif game.turn == NAVY:
-                value, new_board = minimax(game.board, 1, False)
+                value, new_board = minimax(game.board, 1, False, "easy")
                 game.board = new_board
                 game.computer_move()
             for event in pygame.event.get():
@@ -304,11 +304,11 @@ def ai_ez_vs_ai_ez(NAVY_player=0, Red_player=0):
         while run:
             clock.tick(FPS)
             if game.turn == RED:
-                value, new_board = minimax(game.board, 1, True)
+                value, new_board = minimax(game.board, 1, True, "easy")
                 game.board = new_board
                 game.computer_move()
             elif game.turn == NAVY:
-                value, new_board = minimax(game.board, 1, False)
+                value, new_board = minimax(game.board, 1, False, "easy")
                 game.board = new_board
                 game.computer_move()
             for event in pygame.event.get():
@@ -357,11 +357,11 @@ def ai_hd_vs_ai_hd(NAVY_player=0, Red_player=0):
         while run:
             clock.tick(FPS)
             if game.turn == RED:
-                value, new_board = minimax(game.board, 2, True)
+                value, new_board = minimax(game.board, 2, True, "hard")
                 game.board = new_board
                 game.computer_move()
             elif game.turn == NAVY:
-                value, new_board = minimax(game.board, 2, False)
+                value, new_board = minimax(game.board, 2, False, "hard")
                 game.board = new_board
                 game.computer_move()
             for event in pygame.event.get():

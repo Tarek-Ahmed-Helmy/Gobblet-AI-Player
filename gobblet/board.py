@@ -101,7 +101,7 @@ class Board:
         return valid_moves
 
     # we need to implement evaluate function not rand
-    def evaluate(self):
+    def evaluate_hard(self):
         board = self.board[1:5]
         Navy = 0
         Red = 0
@@ -110,10 +110,10 @@ class Board:
         for row in board:
             for col in row:
                 if not (col.isEmpty()) and col.peek().color == NAVY:
-                    Navy += col.peek().size / 12;
+                    Navy += col.peek().size / 12
                     NavyNum += 1
                 elif not (col.isEmpty()) and col.peek().color == RED:
-                    Red += col.peek().size / 12;
+                    Red += col.peek().size / 12
                     RedNum += 1
             if NavyNum > 0 and RedNum == 0:
                 Navy *= NavyNum
@@ -127,13 +127,13 @@ class Board:
             columnArray = [self.board[row][col] for row in range(1,5)]
             for row in columnArray:
                 if not (row.isEmpty()) and row.peek().color == NAVY:
-                    Navy += row.peek().size / 12;
-                    Red -= row.peek().size / 12;
-                    NavyNum += 1;
+                    Navy += row.peek().size / 12
+                    Red -= row.peek().size / 12
+                    NavyNum += 1
                 elif not (row.isEmpty()) and row.peek().color == RED:
-                    Red += row.peek().size / 12;
-                    Navy -= row.peek().size / 12;
-                    RedNum += 1;
+                    Red += row.peek().size / 12
+                    Navy -= row.peek().size / 12
+                    RedNum += 1
             if NavyNum > 0 and RedNum == 0:
                 Navy *= NavyNum
             elif RedNum > 0 and NavyNum == 0:
@@ -148,6 +148,16 @@ class Board:
             return float('-inf')
         else:
             return Red - Navy
+        
+    def evaluate_easy(self):
+        return random.randint(-10, 10)
+    
+    def evaluate(self, difficulty):
+        if difficulty == "hard":
+            return self.evaluate_hard()
+        elif difficulty == "easy":
+            return self.evaluate_easy()
+
     def print_board(self):
         printed_board = deepcopy(self.board)
         for row, list in enumerate(printed_board):

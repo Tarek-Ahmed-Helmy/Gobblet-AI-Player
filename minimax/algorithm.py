@@ -3,17 +3,17 @@ from gobblet.constants import *
 from gobblet.board import Board
 from gobblet.gameStatus import check_winner
 
-def minimax(board_state, depth, max_player):
+def minimax(board_state, depth, max_player, difficulty):
 
     if depth == 0 or check_winner(board_state.board) != False:
-        return board_state.evaluate(), board_state
+        return board_state.evaluate(difficulty), board_state
     
     if max_player:
         max_evaluation = float('-inf')
         best_move = None
         moves = get_all_moves(board_state, RED)
         for move in moves:
-            evaluation = minimax(move, depth-1, False)[0]
+            evaluation = minimax(move, depth-1, False, difficulty)[0]
             max_evaluation = max(max_evaluation, evaluation)
             if max_evaluation == evaluation:
                 best_move = move
@@ -23,7 +23,7 @@ def minimax(board_state, depth, max_player):
         best_move = None
         moves = get_all_moves(board_state, NAVY)
         for move in moves:
-            evaluation = minimax(move, depth-1, True)[0]
+            evaluation = minimax(move, depth-1, True, difficulty)[0]
             min_evaluation = min(min_evaluation, evaluation)
             if min_evaluation == evaluation:
                 best_move = move
