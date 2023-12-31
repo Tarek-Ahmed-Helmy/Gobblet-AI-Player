@@ -8,20 +8,23 @@ from gobblet.game_modes import *
 
 def startGame(game_mode, mainWindow):
     mainWindow.destroy()
+    returned = 0
     if game_mode == 1:   
-        player_vs_player()
+        returned = player_vs_player()
     elif game_mode == 2:
-        player_vs_ai_easy()
+        returned = player_vs_ai_easy()
     elif game_mode == 3:
-        player_vs_ai_hard()
+        returned = player_vs_ai_hard()
     elif game_mode == 4:
-        ai_ez_vs_ai_hd()
+        returned = ai_ez_vs_ai_hd()
     elif game_mode == 5:
-        ai_hd_vs_ai_ez()
+        returned = ai_hd_vs_ai_ez()
     elif game_mode == 6:
-        ai_ez_vs_ai_ez()
+        returned = ai_ez_vs_ai_ez()
     elif game_mode == 7:
-        ai_hd_vs_ai_hd()
+        returned = ai_hd_vs_ai_hd()
+    if returned == "game modes":
+        main()
 
 def chooseLevel(mainWindow):
     mainWindow.destroy()
@@ -33,6 +36,8 @@ def chooseLevel(mainWindow):
     button.pack()
     button = ttk.Button(chooseWindow, text="Hard", command=lambda: startGame(3, chooseWindow))
     button.pack()
+    button = ttk.Button(chooseWindow, text="Back", command=lambda: main(chooseWindow), padding=(10, 5))
+    button.pack(pady=20, padx=50)
     style = ttk.Style()
     style.configure("TButton", padding=10, font=("Helvetica", 12))
     chooseWindow.mainloop()
@@ -51,11 +56,15 @@ def chooseLevel_AI(mainWindow):
     button.pack()
     button = ttk.Button(chooseWindow, text="Hard vs Hard", command=lambda: startGame(7, chooseWindow))
     button.pack()
+    button = ttk.Button(chooseWindow, text="Back", command=lambda: main(chooseWindow), padding=(10, 5))
+    button.pack(pady=20, padx=50)
     style = ttk.Style()
     style.configure("TButton", padding=10, font=("Helvetica", 12))
     chooseWindow.mainloop()
 
-def main():
+def main(chooseWindow=None):
+    if chooseWindow:
+        chooseWindow.destroy()
     mainWindow = Tk()
     mainWindow.geometry("400x300+590+290")
     label = ttk.Label(mainWindow, text="Game Mode", font=('helvetica', 16))

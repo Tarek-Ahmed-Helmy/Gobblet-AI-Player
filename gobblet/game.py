@@ -14,6 +14,7 @@ class Game:
         self.cur_score = 0, 0
         self.status = "running"
         self.restart_button=None
+        self.start_menu_button = None
 
     def insert_text(self, text, font_size, text_color):
         font = pygame.font.Font(None, font_size)  # You can also specify a font file if you have one
@@ -31,6 +32,7 @@ class Game:
         else:
             player_turn2 = self.insert_text("NAVY", 36, self.turn)
         self.restart_button = Button(2, 25, 100, 40, RED, "Restart", Screen)
+        self.start_menu_button = Button(2, 70, 130, 40, RED, "Game Modes", Screen)
         self.board.draw_squares(Screen)
         self.board.draw_pieces(Screen)
         Screen.blit(score1, (20, WIDTH/(WIN_LEN/362.5)))
@@ -39,6 +41,7 @@ class Game:
         Screen.blit(player_turn1, (650, WIDTH/(WIN_LEN/425)))
         Screen.blit(player_turn2, (680, WIDTH/(WIN_LEN/487.5)))
         self.restart_button.draw()
+        self.start_menu_button.draw()
         pygame.display.update()
 
     def get_square_position(self,pos ,posSquare, color):
