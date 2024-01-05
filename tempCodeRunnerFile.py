@@ -1,1 +1,1 @@
-if event.type == pygame.QUIT:
+pady=5,padx=5
