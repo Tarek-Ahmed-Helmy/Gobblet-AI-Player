@@ -150,7 +150,25 @@ class Board:
             return Red - Navy
         
     def evaluate_easy(self):
-        return random.randint(-10, 10)
+        board = self.board[1:5]
+        Navy = 0
+        Red = 0
+        for row in board:
+            for col in row:
+                if not (col.isEmpty()) and col.peek().color == NAVY:
+                    Navy += 1
+                elif not (col.isEmpty()) and col.peek().color == RED:
+                    Red += 1
+        for col in range(len(self.board[1])):
+            columnArray = [self.board[row][col] for row in range(1, 5)]
+            for row in columnArray:
+                if not (row.isEmpty()) and row.peek().color == NAVY:
+                    Navy += 1
+                    Red -= 1
+                elif not (row.isEmpty()) and row.peek().color == RED:
+                    Red += 1
+                    Navy -= 1
+            return Red - Navy
     
     def evaluate(self, difficulty):
         if difficulty == "hard":
