@@ -81,33 +81,33 @@ class Board:
     
 
     def get_valid_moves(self, piece):
-        valid_moves = []
-        board = self.board[1:5]
+        validMoves = []
+        actualBoard = self.board[1:5]
         if piece[0] in [0,5]:
-            for row, list in enumerate(board):
-                for col, item in enumerate(list):
+            for boardRowIndex, boardRow in enumerate(actualBoard):
+                for col, item in enumerate(boardRow):
                     if item.isEmpty():
-                        valid_moves.append([row+1, col])
+                        validMoves.append([boardRowIndex+1, col])
                     else:
-                        if can_play(self.board, row+1, col, piece[2].color):
+                        if can_play(self.board, boardRowIndex+1, col, piece[2].color):
                             if piece[2].size > item.peek().size:
-                                valid_moves.append([row+1, col])
+                                validMoves.append([boardRowIndex+1, col])
         else:
-            for row, list in enumerate(board):
-                for col, item in enumerate(list):
+            for boardRowIndex, boardRow in enumerate(actualBoard):
+                for col, item in enumerate(boardRow):
                     if item.isEmpty() or piece[2].size > item.peek().size:
-                        valid_moves.append([row+1, col])
+                        validMoves.append([boardRowIndex+1, col])
 
-        return valid_moves
+        return validMoves
 
     # we need to implement evaluate function not rand
     def evaluate_hard(self):
-        board = self.board[1:5]
+        actualBoard = self.board[1:5]
         Navy = 0
         Red = 0
         NavyNum = 0
         RedNum = 0
-        for row in board:
+        for row in actualBoard:
             for col in row:
                 if not (col.isEmpty()) and col.peek().color == NAVY:
                     Navy += col.peek().size / 12

@@ -21,6 +21,52 @@ def show_winner(winner):
     label.pack(padx=50, pady=50)
     root.mainloop()
 
+def player_vs_player(NAVY_player=0, Red_player=0):
+    Screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    pygame.display.set_caption("Gobblet")
+    in_game = True
+    start = True
+    while in_game:
+        if start:
+            pass
+        else:
+            if currentGame.winner == "NAVY wins":
+                NAVY_player+=1
+            elif currentGame.winner == "RED wins":
+                Red_player+=1
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                in_game = False
+        run = True
+        clock = pygame.time.Clock()
+        currentGame = Game(Screen)
+        currentGame.cur_score = (NAVY_player, Red_player)
+        winner_shown = False
+        start = False
+        while run:
+            clock.tick(FPS)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    run = False
+                    in_game = False
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if currentGame.restart_button.rect.collidepoint(event.pos):
+                        pygame.quit()
+                        return player_vs_player(NAVY_player, Red_player)
+                    if currentGame.start_menu_button.rect.collidepoint(event.pos):
+                        pygame.quit()
+                        return "game modes"
+                    pos = pygame.mouse.get_pos()
+                    clicked_color = get_color_at_position(pos, Screen)
+                    currentGame.movePiece(pos, clicked_color, Screen)
+            currentGame.updateScreen(Screen)
+            if currentGame.winner and not winner_shown:
+                winner_shown = True
+                # Start the Tkinter thread
+                tkinter_thread = threading.Thread(target=show_winner(currentGame.winner))
+                tkinter_thread.start()
+                run = False
+    pygame.quit()
 
 def player_vs_ai_easy(NAVY_player=0, Red_player=0):
     Screen = pygame.display.set_mode((WIDTH, HEIGHT))
