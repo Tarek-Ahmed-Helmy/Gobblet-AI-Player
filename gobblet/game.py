@@ -15,6 +15,18 @@ class Game:
         self.status = "running"
         self.restart_button=None
         self.start_menu_button = None
+        # arrays[3] for draw checking
+        self.array_Red = [(None, None), (None, None), (None, None)]
+        self.array_Navy = [(None, None), (None, None), (None, None)]
+        # number of repetition for player RED
+        self.no_Red=0
+        # number of repetition for player Navy
+        self.no_Navy=0
+        # iterator to store the position 
+        self.ired=0
+        self.iNavy=0
+        # general iterator
+        #self.igen=0
 
     def insert_text(self, text, font_size, text_color):
         font = pygame.font.Font(None, font_size)  # You can also specify a font file if you have one
@@ -93,7 +105,35 @@ class Game:
         elif winner == (179, 19, 18):
             self.winner = "RED wins"
 
-    def move(self, Screen, pos, color):
+
+    def checkRepetition(self,color):  
+        if color == RED:
+            if self.array_Red[self.ired-1]== self.array_Red[(self.ired-3)%3]:
+              self.no_Red=self.no_Red+1
+              if abs(self.no_Red - self.no_Navy)!=0 and abs(self.no_Red - self.no_Navy)!=1 :
+                  self.no_Red=0
+                  self.no_Navy=0
+            else :
+                if self.no_Red !=0 :
+                     self.no_Red=0
+
+        elif color == NAVY :
+             if self.array_Navy[self.iNavy-1]== self.array_Navy[(self.iNavy-3)%3]:
+                self.no_Navy=self.no_Navy+1
+                if abs(self.no_Red - self.no_Navy)!=0 and abs(self.no_Red - self.no_Navy)!=1 :
+                  self.no_Red=0
+                  self.no_Navy=0
+             else :
+                if self.no_Navy !=0 :
+                     self.no_Navy=0
+        
+        if (self.no_Red ==3 and self.no_Navy==3):
+            return True
+        
+        return False
+
+
+    def move(self, Screen, pos, color,gobblet_color):
         # Wait for the second click
         second_click = False
         while not second_click:
@@ -111,13 +151,29 @@ class Game:
                         rowG, colG, rowS, colS = self.get_square_position(pos, posSquare, color)
                         if(color == None):
                             is_moved = self.board.put_piece(rowG,colG,rowS,colS,Screen)
+                            if gobblet_color == RED:
+                                    self.array_Red[self.ired]= (rowS,colS)
+                                    self.ired=(self.ired+1)%3
+                            elif gobblet_color == NAVY :
+                                    self.array_Navy[self.iNavy]= (rowS,colS)
+                                    self.iNavy=(self.iNavy+1)%3
                             if is_moved:
+                                if self.checkRepetition(gobblet_color) :
+                                    self.winner="DRAW"
                                 self.set_winner()
                             self.change_turn()
                         else:
                             if can_play(self.board.board, rowS, colS, color):
                                 is_moved = self.board.put_piece(rowG,colG,rowS,colS,Screen)
+                                if color == RED:
+                                    self.array_Red[self.ired]= (rowS,colS)
+                                    self.ired=(self.ired+1)%3
+                                elif color == NAVY :
+                                    self.array_Navy[self.iNavy]= (rowS,colS)
+                                    self.iNavy=(self.iNavy+1)%3
                                 if is_moved:
+                                    if self.checkRepetition(color) :
+                                         self.winner="DRAW"
                                     self.set_winner()
                                     self.change_turn()
                             else:
@@ -127,11 +183,11 @@ class Game:
         if self.turn != clicked_color:
             return
         if self.is_within_board(pos) and (clicked_color == RED or clicked_color == NAVY):
-            self.move( Screen, pos, None)    
+            self.move( Screen, pos, None,clicked_color)    
         elif not(self.is_within_board(pos)) and clicked_color == RED:
-            self.move( Screen, pos, RED)
+            self.move( Screen, pos, RED,0)
         elif not(self.is_within_board(pos)) and clicked_color == NAVY:
-            self.move( Screen, pos, NAVY)
+            self.move( Screen, pos, NAVY,0)
         else:
             pass
 
