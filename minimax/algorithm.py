@@ -3,32 +3,32 @@ from gobblet.constants import *
 from gobblet.board import Board
 from gobblet.gameStatus import check_winner
 
-def minimax(board_state, depth, max_player, difficulty):
+def minimax(boardState, depth, maxPlayer, difficulty):
 
-    if depth == 0 or check_winner(board_state.board) != False:
-        return board_state.evaluate(difficulty), board_state
+    if depth == 0 or check_winner(boardState.board) != False:
+        return boardState.evaluate(difficulty), boardState
     
-    if max_player:
-        max_evaluation = float('-inf')
-        best_move = None
-        moves = get_all_moves(board_state, RED)
+    if maxPlayer:
+        maxEvaluation = float('-inf')
+        bestMove = None
+        moves = get_all_moves(boardState, RED)
         for move in moves:
             evaluation = minimax(move, depth-1, False, difficulty)[0]
-            max_evaluation = max(max_evaluation, evaluation)
-            if max_evaluation == evaluation:
-                best_move = move
-        return max_evaluation, best_move
+            maxEvaluation = max(maxEvaluation, evaluation)
+            if maxEvaluation == evaluation:
+                bestMove = move
+        return maxEvaluation, bestMove
     else:
-        min_evaluation = float('inf')
-        best_move = None
-        moves = get_all_moves(board_state, NAVY)
+        minEvaluation = float('inf')
+        bestMove = None
+        moves = get_all_moves(boardState, NAVY)
         for move in moves:
             evaluation = minimax(move, depth-1, True, difficulty)[0]
-            min_evaluation = min(min_evaluation, evaluation)
-            if min_evaluation == evaluation:
-                best_move = move
+            minEvaluation = min(minEvaluation, evaluation)
+            if minEvaluation == evaluation:
+                bestMove = move
         
-        return min_evaluation, best_move
+        return minEvaluation, bestMove
 
 
 def simulate_move(piece, move, board):
@@ -42,12 +42,11 @@ def simulate_move(piece, move, board):
 def get_all_moves(board, color):
     moves = []
     for piece in board.get_all_pieces(color):
-        valid_moves = board.get_valid_moves(piece)
-        for move in valid_moves:
+        validMoves = board.get_valid_moves(piece)
+        for move in validMoves:
             temp_board = deepcopy(board)
             temp_piece = piece[0], piece[1]
             new_board = simulate_move(temp_piece, move, temp_board)
             moves.append(new_board)
     
     return moves
-

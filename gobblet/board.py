@@ -5,6 +5,7 @@ from .constants import *
 from .piece import Piece
 from .stack import Stack
 from .gameStatus import *
+import time
 
 class Board:
     def __init__(self):
@@ -153,23 +154,27 @@ class Board:
         board = self.board[1:5]
         Navy = 0
         Red = 0
+        # Add a delay of 0.01 second
+        time.sleep(0.01)
         for row in board:
             for col in row:
                 if not (col.isEmpty()) and col.peek().color == NAVY:
                     Navy += 1
+
                 elif not (col.isEmpty()) and col.peek().color == RED:
                     Red += 1
+
         for col in range(len(self.board[1])):
             columnArray = [self.board[row][col] for row in range(1, 5)]
             for row in columnArray:
                 if not (row.isEmpty()) and row.peek().color == NAVY:
-                    Navy += 1
-                    Red -= 1
+                    Navy += 1 - row.peek().size / 12
+
                 elif not (row.isEmpty()) and row.peek().color == RED:
-                    Red += 1
-                    Navy -= 1
+                    Red += 1 - row.peek().size / 12
+
             return Red - Navy
-    
+
     def evaluate(self, difficulty):
         if difficulty == "hard":
             return self.evaluate_hard()
@@ -177,12 +182,12 @@ class Board:
             return self.evaluate_easy()
 
     def print_board(self):
-        printed_board = deepcopy(self.board)
-        for row, list in enumerate(printed_board):
-            for col, item in enumerate(list):
-                if not item.isEmpty():
-                    printed_board[row][col] = item.peek().color, item.peek().size
+        printedBoard = deepcopy(self.board)
+        for rowIndex, row in enumerate(printedBoard):
+            for colIndex, col in enumerate(row):
+                if not col.isEmpty():
+                    printedBoard[rowIndex][colIndex] = col.peek().color, col.peek().size
                 else:
-                    printed_board[row][col] = 0
+                    printedBoard[rowIndex][colIndex] = 0
 
-            print(printed_board[row])
+            print(printedBoard[rowIndex])
