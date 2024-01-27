@@ -71,10 +71,21 @@ and this mode (AI vs AI) has 4 difficulty levels:
 
 The game algorithms used in this project are:
 
-1. The minimax algorithm: a basic search algorithm that examines all possible moves from a given position and selects the move that leads to the best outcome for the current player
+ The minimax algorithm: a basic search algorithm that examines all possible moves from a given position and selects the move that leads to the best outcome for the current player
 
 
 ### Heuristics
+The heuristics used for evaluating the game state in the project are primarily based on counting the number of pieces (both in rows and columns) for each player (Navy and Red).
+-Easy mode : 
+The heuristic function used in this mode is, counting the number of pieces for both players in each row and column then adjusting the scores based on the interaction between rows and columns without taking their sizes in consideration (Penalises the score if there are both Navy and Red pieces in a row or column) and finally returns the difference between two scores. 
+-Hard mode : 
+The heuristic function used in this mode introduces a more complex scoring system based on piece sizes, interactions between rows and columns, and a penalty for mixed rows/columns. First, it counts the number of pieces for both the computer and the player in each row and column. It calculates the score for both by summing pieces weights ( assigning appropriate weight to each piece based on its size ). Stores this value in separate variables one for the player and the other for the computer, it  then checks the number of both computer pieces and player pieces for each row and column:
+If the number of computer pieces is greater than zero and there aren’t any player pieces in the same row or column then multiply the number of computer pieces in this row or column by the score of the computer to add an extra score to the computer (because in this state the computer can win in this row or column).
+If the number of player pieces is greater than zero and there aren’t any computer pieces in the same row or column then multiply the number of computer pieces in this row or column by the score of the player to add an extra score to the player (because in this state the player can win in this row or column).
+If there exist pieces in the same row or column for both the player and the computer then subtract the multiplication of the number of player and computer pieces from the computer score to reduce the score of the computer (because in this state the computer cannot win in this row or column).
+
+After evaluating the score of both the player and computer in the passed board state then we need to check if this state indicates a win for the player then we return - infinity while if it indicates a win for the player then it returns + infinity while if it doesn’t indicate a win for either then the function returns the difference between two scores.
+
 
 ## The GUI
 
@@ -104,8 +115,8 @@ python main.py
 
 ### Run From Executable
 
- Link to download Executable
-  
+ decompress the folder uploaded on lms and run .exe 
+ 
 
 
 ### Game Manual
